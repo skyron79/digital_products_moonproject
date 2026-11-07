@@ -10,7 +10,7 @@ import Message from '../../../model/api/V1/messageModel.js'
         message: 'messages retrieved successfully',
         data: messages
     }
-    
+
     res.json(result);
    
 }
@@ -41,14 +41,36 @@ export const create  =  async (req, res, next) => {
 
 }
 
-// update a message
+// update a message : optional
 export const update  =   async (req, res, next) => {
-    res.send('update messages')
+    const messageId = req.params.id
+    const updatedMessage = await Message.findByIdAndUpdate(messageId, req.body, { new: true })
+
+    const result = {
+        status: 'success',
+        message: 'message updated successfully',
+        data: updatedMessage
+    }
+
+    res.json(result)
 }
 
-// delete a message
-export const remove = (req, res, next) => {
+// delete a message : optional
+export const remove = async (req, res, next) => {
+
     res.send('delete messages')
+
+    const messageId = req.params.id
+    const deleteedMesage = await Message.findByIdAndDelete(messageId)
+
+    const result = {
+        status: 'success',
+        message: 'message deleted successfully',
+        data: deleteedMesage
+    }
+
+    res.json(result)
+
 }
 
 
